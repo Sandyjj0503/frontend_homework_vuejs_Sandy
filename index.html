@@ -7,11 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
-    <style>
-        .container {
-            margin-top: 12px;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -22,15 +18,28 @@
         <form>
             <div class="form-group">
                 <label for="input-title-ch">Title in Chinese</label>
-                <input type="text" class="form-control" id="input-title-ch" placeholder="金牌特務">
+                <input type="text" name="chTitle" class="form-control" v-bind:class="{ 'is-invalid': chTitleError }" v-model="chTitle" placeholder="金牌特務">
+                <div class="invalid-feedback">
+                    {{ chTitleErrMsg }}
+                </div>
             </div>
             <div class="form-group">
                 <label for="input-title-eng">Title in English</label>
-                <input type="text" class="form-control" id="input-title-eng" placeholder="Kingsman">
+                <input type="text" name="enTitle" class="form-control" v-bind:class="{ 'is-invalid': enTitleError }" v-model="enTitle" placeholder="Kingsman">
+                <div class="invalid-feedback">
+                    {{ enTitleErrMsg }}
+                </div>
             </div>
             <div class="form-group">
                 <label for="input-intro">Intro</label>
-                <input type="text" class="form-control" id="input-intro" placeholder="是一部於2015年上映，由英國、美國合拍的諜報喜劇動作片...">
+                <textarea name="intro" class="form-control" rows="4" cols="50"
+                    v-bind:class="{ 'is-invalid': introError }" 
+                    v-model="intro" 
+                    placeholder="是一部於2015年上映，由英國、美國合拍的諜報喜劇動作片...">
+                </textarea>
+                <div class="invalid-feedback">
+                    {{ introErrMsg }}
+                </div>
             </div>
             <div id="button-insert" class="btn btn-primary">Insert</div>
         </form>
