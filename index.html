@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>My Movies</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+    <style>
+        .container {
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">My Movie List</a>
+    </nav>
+    <div class="container" id="main">
+        <form>
+            <div class="form-group">
+                <label for="input-title-ch">Title in Chinese</label>
+                <input type="text" class="form-control" id="input-title-ch" placeholder="金牌特務">
+            </div>
+            <div class="form-group">
+                <label for="input-title-eng">Title in English</label>
+                <input type="text" class="form-control" id="input-title-eng" placeholder="Kingsman">
+            </div>
+            <div class="form-group">
+                <label for="input-intro">Intro</label>
+                <input type="text" class="form-control" id="input-intro" placeholder="是一部於2015年上映，由英國、美國合拍的諜報喜劇動作片...">
+            </div>
+            <div id="button-insert" class="btn btn-primary">Insert</div>
+        </form>
+        <hr />
+        <ul id="list-movie" class="list-group">
+            <li class="list-group-item" v-for="item in dataList">
+                <h3>{{item.ch_name}}</h3>
+                <h4>{{item.eng_name}}</h4>
+                <div class="movie-intro">{{item.intro}}</div>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
+
+</html>
