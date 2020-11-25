@@ -46,8 +46,13 @@ var vm = new Vue({
         },
         intro: function () {
             var introText = this.intro.replace(/\s*/g,""); 
-            console.log(introText.length)
-            if (introText.length < 1) {
+            //console.log(introText.length)
+            var text = this.intro.indexOf('Intro');
+            if (text === -1) {
+                this.introError = true;
+                this.introErrMsg = 'Need to start with Intro';
+            }
+            else if (introText.length < 1) {
                 this.introError = true;
                 this.introErrMsg = 'Required';
             }
