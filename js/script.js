@@ -1,94 +1,125 @@
-var vm = new Vue({
-    el: "#main",
+Vue.component('movie', {
+	props: ['item'],
+	template: '<li class="list-group-item">\
+                <h3>{{item.ch_name}}</h3>\
+                <h4>{{item.eng_name}}</h4>\
+                <div class="movie-intro">{{item.intro}}</div>\
+            </li>'
+})
+
+var app = new Vue({
+    el: '#app',
     data: {
-        chTitle: '',
-        chTitleError: '',
-        chTitleErrMsg: '',
-        enTitle: '',
-        enTitleError: '',
-        enTitleErrMsg: '',
+        chName: '',
+        enName: '',
         intro: '',
+        chNameError: '',
+        chNameErrMsg: '',
+        enNameError: '',
+        enNameErrMsg: '',
         introError: '',
         introErrMsg: '',
-        dataList: [],
+        movie_item: [],
+        resetting : false
     },
-    created: function () {
-        this.getList();
+    mounted(){
+        const content = this;
+        const apiUrl = "https://cors-anywhere.herokuapp.com/https://hw-web-api.herokuapp.com/api/movie/list.php";
+        axios.get(apiUrl, {})
+            .then((res) => { 
+                content.movie_item = res.data; 
+            })
+            .catch((error) => { 
+                console.error(error); 
+            });
+
     },
     watch: {
-        chTitle: function () {
-            if (this.chTitle.length < 1) {
-                this.chTitleError = true;
-                this.chTitleErrMsg = 'Required';
+        chName: function () {
+            if (this.resetting){
+                return;
             }
-            else if (this.chTitle.length > 50) {
-                this.chTitleError = true;
-                this.chTitleErrMsg = '請勿超過50個字';
-            }
-            else {
-                this.chTitleError = false;
+            if (this.chName.length === 0) {
+                this.chNameError = true;
+                this.chNameErrMsg = '必填';
+            } else if (this.chName.length > 50) {
+                this.chNameError = true;
+                this.chNameErrMsg = '請勿超過50個字';
+            } else {
+                this.chNameError = false;
             }
         },
-        enTitle: function () {
-            var enText = this.enTitle.replace(/[^A-Za-z0-9\s]/g,"").replace(/\s*/g,"");
-            console.log(enText)
-            if (enText.length < 1) {
-                this.enTitleError = true;
-                this.enTitleErrMsg = 'Required';
+        enName: function () {
+            if (this.resetting){
+                return;
             }
-            else if (enText.length > 100) {
-                this.enTitleError = true;
-                this.enTitleErrMsg = '請勿超過100個字';
-            }
-            else {
-                this.enTitleError = false;
+            let enText = /^[^@\/\'\\\"#$%&\^\*]+$/; 
+            if (this.enName.length === 0) {
+                this.enNameError = true;
+                this.enNameErrMsg = '必填';
+            } else if (!enText.test(this.enName)) {
+                this.enNameError = true;
+                this.enNameErrMsg = '不能含有$, %, ^, &, *...等特殊符號';
+            } else if (this.enName.length > 100) {
+                this.enNameError = true;
+                this.enNameErrMsg = '請勿超過100個字';
+            } else {
+                this.enNameError = false;
             }
         },
         intro: function () {
-            var introText = this.intro.replace(/\s*/g,""); 
-            //console.log(introText.length)
-            var text = this.intro.indexOf('Intro');
-            if (text === -1) {
-                this.introError = true;
-                this.introErrMsg = 'Need to start with Intro';
+            if (this.resetting){
+                return;
             }
-            else if (introText.length < 1) {
+            let introText = this.intro.replace(/\s*/g,""); //除去空白格
+            let text = /^Intro/; //字串開頭必須符合Intro	
+            if (!text.test(this.intro)) {
                 this.introError = true;
-                this.introErrMsg = 'Required';
-            }
-            else if (introText.length < 10) {
+                this.introErrMsg = '必須以Intro為開頭';
+            } else if (introText.length === 0) {
                 this.introError = true;
-                this.introErrMsg = 'String length must between 10 to 255';
-            }
-            else if (introText.length > 255) {
+                this.introErrMsg = '必填';
+            } else if (introText.length < 10 || introText.length > 255) {
                 this.introError = true;
-                this.introErrMsg = 'String length must between 10 to 255';
-            }
-            else {
+                this.introErrMsg = '字數需介於10~255之間';
+            } else {
                 this.introError = false;
             }
         }
     },
     methods: {
-        getList: function () {
-            var vm = this;
-            var url = "https://cors-anywhere.herokuapp.com/https://hw-web-api.herokuapp.com/api/movie/list.php";
-            $.ajax({
-                url: url,
-                type: "GET",
-                headers: {
-                    Accept: "application/json; charset=utf-8"
-                },          
-                dataType: "json",
-                async: true,
-                success: function (result) {
-                    vm.dataList = result;
-                    //console.log(vm.dataList)
-                    
-                }, error: function (err) {
-                    console.log(err)
-                }
-            });    
+        Insert() {
+            let newItem = {
+                ch_name: this.chName,
+                eng_name: this.enName,
+                intro: this.intro,
+            }
+            if(this.chName === "" ) {
+                this.chNameError = true; this.chNameErrMsg = '請輸入中文標題';
+            }
+            if(this.enName === "" ) {
+                this.enNameError = true; this.enNameErrMsg = '請輸入英文標題';
+            }
+            if( this.intro === "") {
+                this.introError = true; this.introErrMsg = '請輸入簡介';
+            }
+            
+            if(this.chNameError === true || this.enNameError === true || this.introError === true){
+                return false;
+            } else { 
+                this.movie_item.unshift(newItem); //將newItem的值新增到列表中
+                this.empty(); //清空輸入的資料
+            }
+        },
+        empty() {
+            this.resetting = true;
+            this.chName = '';
+            this.enName = '';
+            this.intro = '';
+            //使用$nextTick回調來獲取更新後的 DOM
+            this.$nextTick(()=>{
+                this.resetting = false;
+            })
         }
-    }
-});
+    },
+})
