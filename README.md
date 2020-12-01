@@ -1,4 +1,4 @@
-# eCloudvalley線上作業
+## eCloudvalley線上作業
 
 本次測驗的目標，將一個用 PHP 、 JavaScript / jQuery 所編寫的程式，嘗試重構為 Vue.js 框架，並完成表單所需求之功能撰寫。
 <br>
@@ -7,7 +7,9 @@
 
   1. 建立頁面架構
      * 沿用既有的HTML架構，將 CSS 移出至 style.css 、 JavaScript 則移出至 script.js 並改寫成 Vue 
+  
   2. 改用 CDN 引入 Bootstrap-Vue 取代原先資料夾有使用到的 jQuery 、 Bootstrap 
+   
   3. 運用 Vue Components 的功能將頁面底下的`<ul>`列表移至 template 中管理
   4. 串接 API 取得資料
      * 在 Vue mounted() 中執行 axios 請求第三方 API 資料
@@ -25,6 +27,8 @@
 ### HTML的部分
 
 * 建立 input 數值，使用 v-model 綁在 data 上， v-bind:class 則是顯示錯誤的開關，再建立一個 invalid-feedback 的 div ，裡面用來放錯誤訊息
+* example：
+![image](https://github.com/Sandyjj0503/frontend_homework_vuejs_Sandy/blob/master/img/example1.JPG)
 
 ### Title in Chinese 
 
