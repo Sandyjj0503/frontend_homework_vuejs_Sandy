@@ -1,7 +1,8 @@
 ## eCloudvalley線上作業
 
 本次測驗的目標，將一個用 PHP 、 JavaScript / jQuery 所編寫的程式，嘗試重構為 Vue.js 框架，並完成表單所需求之功能撰寫。
-<br>
+
+<p>GitHub Page連結：https://sandyjj0503.github.io/frontend_homework_vuejs_Sandy/</p>
 
 ## 開發步驟
 
