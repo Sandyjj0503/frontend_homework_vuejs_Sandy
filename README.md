@@ -13,7 +13,7 @@
   3. 運用 Vue Components 的功能將頁面底下的`<ul>`列表移至 template 中管理
   4. 串接 API 取得資料
      * 在 Vue mounted() 中執行 axios 請求第三方 API 資料
-  5. 使用 Vue watch 事件來監聽表單驗證功能
+  5. 使用 Vue watch 事件來監聽表單驗證功能(可參考關於 Target#4 說明)
   6. Vue methods 事件中用來執行各項 Function
      * Insert () ： 在 HTML 中使用 v-on:click 來執行表單送出的功能
      * empty () ： 送出後，清空輸入框的內容
