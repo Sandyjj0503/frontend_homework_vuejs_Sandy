@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>My Movies</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">My Movie List</a>
+    </nav>
+    <div class="container" id="app">
+        <form>
+            <div class="form-group">
+                <label for="input-title-ch">Title in Chinese
+                    <small class="form-text text-muted">必填；字數需介於1~50之間</small>
+                </label>
+                <input type="text" name="chName" id="input-title-ch" class="form-control" 
+                    v-bind:class="{ 'is-invalid': chNameError }" 
+                    v-model="chName" 
+                    placeholder="金牌特務">
+                <div class="invalid-feedback">
+                    {{ chNameErrMsg }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-title-eng">Title in English
+                    <small class="form-text text-muted">必填；字數需介於1~100之間，且不能含有$, %, ^, &, *</small>
+                </label>
+                <input type="text" name="enName" id="input-title-eng" class="form-control" 
+                    v-bind:class="{ 'is-invalid': enNameError }" 
+                    v-model="enName" 
+                    placeholder="Kingsman">
+                <div class="invalid-feedback">
+                    {{ enNameErrMsg }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-intro">Intro
+                    <small class="form-text text-muted">必填；字數需介於10~255之間，且必須以Intro為開頭</small>
+                </label>
+                <textarea name="intro" id="input-intro" class="form-control" rows="4" cols="50"
+                    v-bind:class="{ 'is-invalid': introError }" 
+                    v-model="intro" 
+                    placeholder="是一部於2015年上映，由英國、美國合拍的諜報喜劇動作片...">
+                </textarea>
+                <div class="invalid-feedback">
+                    {{ introErrMsg }}
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" v-on:click="Insert">Insert</button>
+        </form>
+        <hr />
+        <ul id="list-movie" class="list-group">
+            <movie v-bind:item="val" v-for="val in movie_item"></movie>
+        </ul>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+<script src="js/script.js"></script>
+
+</html>
